@@ -1,0 +1,11 @@
+﻿Ejercicio para subir una nota (Válido como +1 punto en cualquier nota)
+
+
+Muchachos, el ejercicio es una prueba de java con MySQL reciclada. 
+Deberán hacer lo mismo de la prueba en una página ASPX, con Microsoft SQL. 
+La estructura de tablas no deberá ser cambiada. Sientase libre de cambiar
+ la disposición de los componentes, mientras cumpla con los requerimientos 
+no hay problemas. Además de enviar el proyecto compreso, debe enviar un 
+archivo txt llamado falta.txt, explicando que cosas les faltó desarrollar.
+Hora de entrega: Mañana hasta las 9 de la mañana. Por cada minuto de atraso 
+se descontará 1 décima.
