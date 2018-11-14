@@ -27,16 +27,16 @@ namespace SubirPuntoNet.Controller {
 
             DAO_Nota dn = new DAO_Nota();
 
-           // if ((dn.PorcentajeCompleto(fk_asignatura) == false) && (dn.SePuedeAgregarLaNota(n)==true)) 
-         //   {
+            if ((dn.PorcentajeCompleto(fk_asignatura) == false) && (dn.SePuedeAgregarLaNota(n)==true)) 
+            {
                 dn.Create(n);
-                List<Nota> listaDeNotas = dn.ReadNotasDeLaAsignaturaComoLista(n.Asig.Id);
-                context.Session["listaDeNotas"] = listaDeNotas;
+                //List<Nota> listaDeNotas = dn.ReadNotasDeLaAsignaturaComoLista(n.Asig.Id); //comentado por las consideraciones de la guia
+                //context.Session["listaDeNotas"] = listaDeNotas; //comentado por las consideraciones de la guia
 
-            //  }else
-            //  {
-            //context.Session["error"] = "No puede agregar esa nota porque sobrepasa el porcentaje maximo o ya se alcanzo";
-            //  }
+              }else
+              {
+            context.Session["error"] = "No puede agregar esa nota porque sobrepasa el porcentaje maximo o ya se alcanzo";
+              }
 
 
 

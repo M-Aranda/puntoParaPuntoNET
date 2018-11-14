@@ -84,9 +84,9 @@ namespace SubirPuntoNet.Model.DAO {
             {
                 completo = false;
             }
-            else
+            else if(dt.Rows[0][0] != null)
             {
-                float porc = float.Parse(dt.Rows[0][0].ToString());
+                float porc = float.Parse(dt.Rows[0][0].ToString());//System.FormatException: 'Input string was not in a correct format.'
                 if (porc == 100)
                 {
                     completo = true;
@@ -98,7 +98,6 @@ namespace SubirPuntoNet.Model.DAO {
 
             }
            
-
             return completo;
         }
 
@@ -116,7 +115,7 @@ namespace SubirPuntoNet.Model.DAO {
                 sePuede = false;
             }
 
-            return true;
+            return sePuede;
 
         }
 

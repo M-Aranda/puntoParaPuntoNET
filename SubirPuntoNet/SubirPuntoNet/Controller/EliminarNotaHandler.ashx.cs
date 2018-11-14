@@ -21,8 +21,8 @@ namespace SubirPuntoNet.Controller
             int id = int.Parse(context.Request.Params["idAEliminar"]);
             Nota n = dn.FindById(id);
             dn.Delete(id);
-            List<Nota> listaDeNotas = dn.ReadNotasDeLaAsignaturaComoLista(n.Asig.Id);
-            context.Session["listaDeNotas"] = listaDeNotas;
+            //List<Nota> listaDeNotas = dn.ReadNotasDeLaAsignaturaComoLista(n.Asig.Id); //comentado por las consideraciones de la guia
+            //context.Session["listaDeNotas"] = listaDeNotas; comentado por las consideraciones de la guia
 
 
 
