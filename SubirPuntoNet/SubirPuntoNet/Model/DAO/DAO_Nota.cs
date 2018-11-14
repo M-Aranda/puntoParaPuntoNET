@@ -47,7 +47,101 @@ namespace SubirPuntoNet.Model.DAO {
             return lista;
 
         }
-        
+
+
+
+        public List<Nota> ReadNotasDeLaAsignaturaComoLista(int fk_asig)
+        {
+            DAO_Asignatura da = new DAO_Asignatura();
+            DataTable dt= Ejecutar("SELECT * FROM nota WHERE asignatura=" + fk_asig + " ");
+            List<Nota> lista = new List<Nota>();
+
+            Nota n = null;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                n = new Nota();
+                n.Id = int.Parse(dt.Rows[i][0].ToString());
+                n.Valor = float.Parse(dt.Rows[i][1].ToString());
+                n.Porcentaje = float.Parse(dt.Rows[i][2].ToString());
+                int idAsig = int.Parse(dt.Rows[i][3].ToString());
+                n.Asig = da.FindById(idAsig);
+
+                lista.Add(n);
+
+            }
+
+            return lista;
+
+
+
+        }
+
+        public Boolean PorcentajeCompleto(int asig)
+        {
+            Boolean completo = false;
+            DataTable dt = Ejecutar("SELECT SUM(porcentaje) FROM nota WHERE asignatura="+asig+" ");
+            if (dt.Rows[0][0] == null)
+            {
+                completo = false;
+            }
+            else
+            {
+                float porc = float.Parse(dt.Rows[0][0].ToString());
+                if (porc == 100)
+                {
+                    completo = true;
+                }
+                else
+                {
+                    completo = false;
+                }
+
+            }
+           
+
+            return completo;
+        }
+
+
+        public Boolean SePuedeAgregarLaNota(Nota n)
+        {
+            Boolean sePuede = true;
+
+            DataTable dt = Ejecutar("SELECT SUM(porcentaje) FROM nota WHERE asignatura="+n.Asig.Id+"");
+            float porcentajeAlmacenado = float.Parse(dt.Rows[0][0].ToString());
+            float suma = porcentajeAlmacenado + n.Porcentaje;
+
+            if (suma >= 100)
+            {
+                sePuede = false;
+            }
+
+            return true;
+
+        }
+
+
+        public Nota FindById(int id)
+        {
+            Nota n = null;
+
+            DAO_Asignatura da = new DAO_Asignatura();
+
+            DataTable dt = Ejecutar("SELECT * FROM nota WHERE id=" + id + " ");
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                n = new Nota();
+                n.Id =int.Parse(dt.Rows[i][0].ToString());
+                n.Valor = float.Parse(dt.Rows[i][1].ToString());
+                n.Porcentaje = float.Parse(dt.Rows[i][2].ToString());
+                int idAsig = int.Parse(dt.Rows[i][3].ToString());
+                n.Asig = da.FindById(idAsig);
+
+            }
+
+            return n;
+        }
+
 
     }
 }

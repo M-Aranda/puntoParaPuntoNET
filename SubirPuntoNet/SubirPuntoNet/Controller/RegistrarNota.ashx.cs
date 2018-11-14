@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.SessionState;
 
 namespace SubirPuntoNet.Controller {
     /// <summary>
     /// Descripción breve de RegistrarNota
     /// </summary>
-    public class RegistrarNota : IHttpHandler {
+    public class RegistrarNota : IHttpHandler, IRequiresSessionState {
 
         public void ProcessRequest(HttpContext context) {
             float valor=float.Parse(context.Request.Params["nota"]);
@@ -25,7 +26,18 @@ namespace SubirPuntoNet.Controller {
             n.Asig=a;
 
             DAO_Nota dn = new DAO_Nota();
-            dn.Create(n);
+
+           // if ((dn.PorcentajeCompleto(fk_asignatura) == false) && (dn.SePuedeAgregarLaNota(n)==true)) 
+         //   {
+                dn.Create(n);
+                List<Nota> listaDeNotas = dn.ReadNotasDeLaAsignaturaComoLista(n.Asig.Id);
+                context.Session["listaDeNotas"] = listaDeNotas;
+
+            //  }else
+            //  {
+            //context.Session["error"] = "No puede agregar esa nota porque sobrepasa el porcentaje maximo o ya se alcanzo";
+            //  }
+
 
 
             context.Response.Redirect("../Web/Default.aspx");

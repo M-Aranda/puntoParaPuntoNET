@@ -71,8 +71,14 @@
     <Content Include="Web\Default.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EliminarNotaHandler.ashx.cs">
+      <DependentUpon>EliminarNotaHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Controller\RegistrarNota.ashx.cs">
       <DependentUpon>RegistrarNota.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\VerNotasHandler.ashx.cs">
+      <DependentUpon>VerNotasHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Model\Asignatura.cs" />
     <Compile Include="Model\Conexion.cs" />
@@ -91,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controller\RegistrarNota.ashx" />
+    <Content Include="Controller\VerNotasHandler.ashx" />
+    <Content Include="Controller\EliminarNotaHandler.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

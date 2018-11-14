@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SubirPuntoNet.Web.Default" %>
-<%@ Import Namespace="SubirPuntoNet.Model.DAO" %>}
 <%@ Import Namespace="SubirPuntoNet.Model.DAO" %>
+<%@ Import Namespace="SubirPuntoNet.Model" %>
 
 <!DOCTYPE html>
 
@@ -8,6 +8,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+
 </head>
 
 <body>
@@ -19,44 +20,102 @@
         <h5>Asignatura</h5>
         <%
             DAO_Asignatura da = new DAO_Asignatura();
-
-            
+            List<Asignatura> asignaturas = da.ReadComoLista();
             %>
         <select name="asignatura">
-            <option value="1">wee</option>
-            <option value="2">feed him</option>
-            <option value="3">to the</option>
-
+        <%
+            foreach (Asignatura a in asignaturas)
+            {%>
+            <option name="idAsignaturaParaDarNota" value=<%= a.Id%>><%=a.Nombre%></option>
+            <%} %>
         </select>
         <input type="submit" value="Registrar nota">
     </form>
     <br>
+
+    <%
+        if (Session["error"] != null)
+        {%>
+            <h2><%=Session["error"]%></h2>
+        <%
+                Session.Clear();
+            }
+        %>
+
+
     <br>
-    <select>
-        <option>I brought you into</option>
-        <option>this place</option>
-        <option>and I can</option>
-        <option>take you out</option>
-    </select>
+    <form action="../Controller/VerNotasHandler.ashx" method="post">
+        <select name="asignaa">
+        <%
+            foreach (Asignatura a in asignaturas)
+            {%>
+            <option name="idAsignatura" value=<%= a.Id%>><%=a.Nombre%></option>
+            <%} %>
+        </select>
+        <input type="submit" value="Ver Notas">
+    </form>
     <br>
-    <br>
-    <br>
-    <br>
-    <button value="verNotas">Ver notas</button>
-    <br>
-    <br>
-    <br>
-    <table border="1">
+    <table id="tablaDeNotas" border="1">
         <tr>
             <td>ID</td>
             <td>Nota</td>
             <td>Porcentaje</td>
-            <td>Nota * Porcentaje</td>   
+            <td>Nota * Porcentaje</td>
+            <td>Accion</td>
         </tr>
 
+        <%
+            float porcIgresado = 0;
+            List<Nota> listaDeNotas=(List<Nota>)Session["listaDeNotas"];
+            if (listaDeNotas != null)
+            {
+                
+                foreach (Nota n in listaDeNotas)
+                {%>
+            
+                    <tr>
+                        <td><%=n.Id %></td>
+                        <td><%=n.Valor %></td>
+                        <td><%=n.Porcentaje %></td>
+                        <td><%=(n.Valor*(n.Porcentaje/100))%></td>
+                        <td>
+                            <form action="../Controller/EliminarNotaHandler.ashx" method="post">
+                            <input type="hidden" name="idAEliminar" value=<%=n.Id%>>
+                            <input type="submit" value="Eliminar">
+                            </form>
+                        </td>
+                    </tr>
+
+
+                <%
+                    porcIgresado +=n.Valor*(n.Porcentaje/100);
+                    }
+
+
+                %>
+
+        
+
+            <%}
+                Session.Clear();
+            %>
+
+
+
+
     </table>
-    <button value="eliminarNota">Eliminar nota</button>
-    <h4>Porcentaje ingresado: </h4>
+
+    <div name="porcNOEs100">
+        <h4>Porcentaje ingresado:<%=porcIgresado %></h4>
+    </div>
+
+
+    <div name="porcEs100">
+        <h4>Promedio: </h4>
+        <h4>Necesitas un: </h4>
+    </div>
+
+    
 
 
 

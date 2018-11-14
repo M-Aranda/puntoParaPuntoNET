@@ -13,10 +13,15 @@ namespace SubirPuntoNet.Model {
 
         public Conexion(String bd) {
             con = new SqlConnection(
+                    /*
                     "Data Source=localhost;" +
                     "Initial Catalog=" + bd + "; " +
                     "User id=sa; " +
                     "Password=123456;"
+                    */
+                    "Data Source=localhost;" +
+                    "Initial Catalog=" + bd + "; " +
+                    "Integrated Security=true; "
                 );
 
             /*
